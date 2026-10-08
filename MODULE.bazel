@@ -1,0 +1,17 @@
+module(
+    name = "django_bazel_training",
+    version = "0.0.0",
+)
+
+bazel_dep(name = "aspect_rules_py", version = "2.0.0-alpha.8")
+
+interpreters = use_extension("@aspect_rules_py//py:extensions.bzl", "python_interpreters")
+interpreters.configure(releases = ["20260814"])
+interpreters.toolchain(python_version = "3.12")
+use_repo(interpreters, "python_interpreters")
+
+register_toolchains("@python_interpreters//:all")
+
+uv_bin = use_extension("@aspect_rules_py//uv:extensions.bzl", "uv_bin")
+uv_bin.toolchain(version = "0.11.21")
+use_repo(uv_bin, "uv")
