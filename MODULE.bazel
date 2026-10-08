@@ -4,6 +4,11 @@ module(
 )
 
 bazel_dep(name = "aspect_rules_py", version = "2.0.0-alpha.8")
+bazel_dep(name = "aspect_bazel_lib", version = "2.22.5")
+bazel_dep(name = "apple_support", version = "2.10.1")
+
+bazel_dep(name = "platforms", version = "1.1.0")
+bazel_dep(name = "rules_oci", version = "2.3.0")
 
 interpreters = use_extension("@aspect_rules_py//py:extensions.bzl", "python_interpreters")
 interpreters.configure(releases = ["20260814"])
@@ -24,3 +29,15 @@ uv.project(
     pyproject = "//:pyproject.toml",
 )
 use_repo(uv, "pypi")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "ubuntu",
+    digest = "sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+    image = "ubuntu:24.04",
+    platforms = [
+        "linux/amd64",
+        "linux/arm64/v8",
+    ],
+)
+use_repo(oci, "ubuntu", "ubuntu_linux_amd64", "ubuntu_linux_arm64_v8")
