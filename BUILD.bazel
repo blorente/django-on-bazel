@@ -62,6 +62,7 @@ py_layer_tier(
     groups = {
         "@pip//django": "django",
     },
+    interpreter_group = "interpreter",
 )
 
 py_image_layer(
