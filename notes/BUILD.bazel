@@ -9,6 +9,7 @@ py_library(
             "test_*.py",
         ],
     ),
+    data = glob(["templates/**"]),
     visibility = ["//visibility:public"],
     deps = ["@pypi//django"],
 )
